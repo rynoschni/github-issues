@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Route, Link } from 'react-router-dom';
+import { loadData } from "../utils/loadData";
 import Issue from './Issue';
 
 const IssueList = props => {
