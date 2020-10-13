@@ -1,6 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
-import { BrowserRouter as Route, Link, useRouteMatch } from 'react-router-dom';
+import { BrowserRouter as Route, Link } from 'react-router-dom';
 import Issue from './Issue';
 
 
@@ -10,7 +10,7 @@ class IssueList extends Component{
         };
         
         loadData = async () =>{
-            const response = await fetch('https://api.github.com/repos/facebook/create-react-app/issues/');
+            const response = await fetch('https://api.github.com/repos/facebook/create-react-app/issues');
             const data = await response.json();
             return data;
         }
@@ -29,25 +29,31 @@ class IssueList extends Component{
             // const {path, url} = useRouteMatch();
             const { issuesData } = this.state;
         return (
-            <div>
-                <h1>This is the the Issues</h1>
-                <nav>
-                {
-                issuesData.map((issue) =>(
-                    <Link to={`/issue/${issue.number}`} key={`issue-${issue.number}`}/>
-
-                    ))
-        }
-                
-                </nav>
-                <Route path={`${issue.url}/:id`}>
-                <Issue posts={issue} />
-                </Route>
-
-
-            </div>
-            
-            
+            <>
+                {!!issuesData.length ? (
+                    <>
+                        <h1>GitHub Issues list</h1>
+                        <Route exact path="/">
+                            <ul>
+                        {issuesData.map((issue) => {
+                            return (
+                                <li key={issue.id}>
+                                    {issue.title}
+                                    <Link to={`/issue/${issue.number}`}>View Details</Link>
+                                </li>);
+                        })}
+                        </ul>
+                        </Route>
+                        <Route path={'/issue/:issue_number'}>
+                            <Link to="/">Return to List</Link>
+                            <Issue issues={issuesData} />
+                        </Route>
+                    </>
+                ) : (
+                    <p>Fetching Issues ....</p>
+                )
+                }
+            </>
         );
         }
 
