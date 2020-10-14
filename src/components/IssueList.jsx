@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Route, Link } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import { loadData } from "../utils/loadData";
 import Issue from './Issue';
+import { Title } from "bloomer";
 
 const IssueList = props => {
     const [issues, setIssues] = useState([]);
@@ -19,10 +20,12 @@ const IssueList = props => {
         <>
             {!!issues.length ? (
                 <>
-                    <h1>GitHub Issues list</h1>
+                    <Title isSize={2} tag='h1'>
+                        GitHub Issues list
+                    </Title>
                     <Route exact path="/">
                         <ul>
-                    {issues.map((issue) => {
+                        {issues.map((issue) => {
                         return (
                             <li key={issue.id}>
                                 {issue.title}

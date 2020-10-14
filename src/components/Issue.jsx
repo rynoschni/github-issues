@@ -16,7 +16,6 @@ const Issue = props =>{
         
     </>
     );
-
 };
 
 export default Issue;
